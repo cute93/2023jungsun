@@ -1,34 +1,27 @@
 public class Test extends Thread{
-    private int sec;
-    private int min;
-    private int hour;
-
+    public static int Rank = 5;
     public Test(){
-        init();
+        this("NewThread");
     }
-
-    private void init() {
-        sec = 0;
-        min = 0;
-        hour = 0;
+    public Test(String name) {
+        setName(name);
     }
-    public static void main(String[] args) {
-        long stime = System.currentTimeMillis();
-        int m, s, ms;
-        m = s = ms = 0;
-        boolean flag = true;
-        while(flag){
-            long ctime = System.currentTimeMillis();
-            if((ctime-stime) == 10){
-                stime = ctime;
-                ms = (++ms)%100;
-                if(ms==0){
-                    flag = false;
-                }
-                System.out.println(ms);
-
+    public void run(){
+        for(int i=0; i<10;i++){
+            System.out.println(""+getName()+":"+(i+1));
+            try {
+                Thread.sleep((int)(Math.random()*800));
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
+        System.out.println(getName() + (Rank-Thread.activeCount()) + "등");
         
+    }
+    public static void main(String[] args) {
+        new Test().start();
+        new Test("Field").start();
+        new Test("GOT").start();
     }
 }
